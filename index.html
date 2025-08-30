@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SlideCraft AI - Instantly turn text into professionally styled presentations.">
+    <title>SlideCraft AI - Presentation Generator</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <header class="glass-header">
+            <div class="logo">
+                <i class="fas fa-magic-wand-sparkles"></i>
+                <h1>SlideCraft AI</h1>
+            </div>
+            <p class="tagline">Your Text, Your Style—Instantly Generated Presentations</p>
+        </header>
+
+        <main>
+            <form id="generation-form">
+                <section class="card">
+                    <div class="card-header">
+                        <span class="step-number">1</span>
+                        <h2>Paste Your Content</h2>
+                    </div>
+                    <div class="card-body">
+                        <label for="user-text" class="sr-only">Paste Your Content</label>
+                        <textarea id="user-text" placeholder="Paste your raw text, article, or notes here..." required minlength="50"></textarea>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        <span class="step-number">2</span>
+                        <h2>Upload Your Template</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="file-drop-zone" class="file-drop-zone">
+                            <input type="file" id="file-input" accept=".pptx,.potx" required class="sr-only">
+                            <label for="file-input" class="file-drop-content">
+                                <i class="fas fa-file-upload"></i>
+                                <p><strong>Drag & drop or <u>browse</u> for your .pptx/.potx file</strong></p>
+                                <p class="muted">Your template's styles will be applied.</p>
+                            </label>
+                        </div>
+                        <div id="file-info" class="file-info-area" style="display: none;">
+                            <i class="fas fa-file-powerpoint"></i>
+                            <span id="file-name"></span>
+                            <button type="button" id="remove-file-button" class="remove-file-btn" aria-label="Remove file">&times;</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <div class="card-header">
+                        <span class="step-number">3</span>
+                        <h2>Configure Your AI</h2>
+                    </div>
+                    <div class="card-body ai-config">
+                        <div class="form-group">
+                            <label for="llm-provider">LLM Provider</label>
+                            <select id="llm-provider" class="form-control">
+                                <option value="openai" selected>OpenAI GPT</option>
+                                <option value="anthropic">Anthropic Claude</option>
+                                <option value="google">Google Gemini</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="api-key">API Key</label>
+                            <div class="input-with-icon">
+                                <input type="password" id="api-key" class="form-control" placeholder="Enter your secret API key" required>
+                                <button type="button" id="toggle-visibility" class="toggle-visibility" aria-label="Toggle API key visibility">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small class="form-text-muted">
+                                Your key is saved in your browser. <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">Find your key here.</a>
+                            </small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="generate-section">
+                    <button type="submit" id="generate-btn" class="btn btn-primary" disabled>
+                        <i class="fas fa-cogs"></i>
+                        <span>Generate Presentation</span>
+                    </button>
+                </section>
+            </form>
+
+            <section id="result-area" class="card result-area" style="display: none;" aria-live="polite">
+                <div class="card-body">
+                    <div id="status-display">
+                        </div>
+                    <div id="result-display" style="display: none;">
+                        </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Built with Modern HTML5, CSS, and JavaScript.</p>
+        </footer>
+    </div>
+    
+    <div id="toast-container" class="toast-container"></div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.min.js"></script>
+    <script src="agent.js"></script>
+</body>
+</html>
